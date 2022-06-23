@@ -25,8 +25,10 @@ class OrderSerializer(serializers.ModelSerializer):
 class ItemOrderSerializer(serializers.ModelSerializer):
     order = OrderSerializer()
     item_name = serializers.SerializerMethodField()
+    
     def get_item_name(self, obj):
         return obj.item.name
+        
     class Meta:
         model = ItemOrder
         fields = "__all__"
