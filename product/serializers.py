@@ -19,10 +19,14 @@ class ItemSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
    class Meta:
       model = Order
-      fields = "__all__"
+      fields = ['delivery_address', 'order_date']
 
 
 class ItemOrderSerializer(serializers.ModelSerializer):
-   class Meta:
-      model = ItemOrder
-      fields = "__all__"
+    order = OrderSerializer()
+    item_name = serializers.SerializerMethodField()
+    def get_item_name(self, obj):
+        return obj.item.name
+    class Meta:
+        model = ItemOrder
+        fields = "__all__"
